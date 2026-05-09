@@ -321,8 +321,9 @@
       <li data-jump="3"><span class="toc-title">School Director Flow</span><span class="toc-meta">Figure 2</span></li>
       <li data-jump="4"><span class="toc-title">Directorate Flow</span><span class="toc-meta">Figure 3</span></li>
       <li data-jump="5"><span class="toc-title">Edge Case &mdash; School Doesn&rsquo;t Exist</span><span class="toc-meta">Sub-flow</span></li>
-      <li data-jump="6"><span class="toc-title">Edge Case &mdash; School Transfer</span><span class="toc-meta">Sub-flow</span></li>
-      <li data-jump="7"><span class="toc-title">Open Questions</span><span class="toc-meta">For Decision</span></li>
+      <!-- Open Questions hidden for now
+      <li data-jump="6"><span class="toc-title">Open Questions</span><span class="toc-meta">For Decision</span></li>
+      -->
     </ol>
   </section>
 
@@ -330,12 +331,17 @@
     <div class="flow-text">
       <div class="reveal eyebrow">2.1 &middot; Figure 1</div>
       <h2 class="reveal">Student Application <em>Flow</em></h2>
-      <p class="reveal lede">The student&rsquo;s journey from account creation to final approval. Two side branches: an edit request bounces them back to fix data without restarting, and a hard rejection forces a fresh submission with the reason given.</p>
+      <p class="reveal lede">The student&rsquo;s journey from account creation through identity checks and mandatory payment to approval. After Submit the form locks &mdash; only an edit request from the directorate reopens it. The student is never rejected in their own flow; rejection sits with the directorate.</p>
       <div class="reveal flow-summary">
-        <dl><div><dt>Open Item</dt><dd>We need a route selection in this diagram.</dd></div></dl>
+        <dl>
+          <div><dt>Identity</dt><dd>eKYC and هوية الأحوال verified at the Fill Application stage.</dd></div>
+          <div><dt>Payment</dt><dd>Mandatory before submit. Refunds, when applicable, are issued by the directorate.</dd></div>
+          <div><dt>Lock</dt><dd>After submit, the form is read-only. Only an edit request reopens it.</dd></div>
+          <div><dt>No Reject</dt><dd>Two outcomes only &mdash; approve, or edit request.</dd></div>
+        </dl>
       </div>
     </div>
-    <div class="reveal flow-image"><svg viewBox="0 0 760 880" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="studentTitle">
+    <div class="reveal flow-image"><svg viewBox="0 0 760 980" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="studentTitle">
   <title id="studentTitle">Student Application Flow</title>
 
   <defs>
@@ -354,89 +360,83 @@
     .node-label   { font-family: Fraunces, Georgia, serif; font-size: 16px; fill: #1a1a1a; }
     .node-label-i { font-family: Fraunces, Georgia, serif; font-size: 16px; font-style: italic; fill: #1a1a1a; }
     .node-label-sm { font-family: Fraunces, Georgia, serif; font-size: 14px; fill: #1a1a1a; }
+    .node-label-tiny { font-family: Fraunces, Georgia, serif; font-size: 12px; font-style: italic; fill: #4a4a4a; }
     .edge-label   { font-family: 'Inter Tight', sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; fill: #4a4a4a; }
     .edge-label-accent { font-family: 'Inter Tight', sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; fill: #c1410b; }
     .swimlane-label { font-family: 'Inter Tight', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; fill: #8a8a85; }
+    .lock-label { font-family: 'Inter Tight', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; fill: #c1410b; }
   </style>
 
   <!-- Swimlane label (left edge, vertical) -->
-  <text class="swimlane-label" x="20" y="440" transform="rotate(-90 20 440)">Student</text>
+  <text class="swimlane-label" x="20" y="490" transform="rotate(-90 20 490)">Student</text>
 
-  <!-- Start: small circle -->
-  <circle cx="380" cy="50" r="18" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label-sm" x="380" y="55" text-anchor="middle">start</text>
+  <!-- Start -->
+  <circle cx="380" cy="40" r="18" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label-sm" x="380" y="45" text-anchor="middle">start</text>
 
   <!-- Create Account -->
-  <rect x="290" y="110" width="180" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="380" y="143" text-anchor="middle">Create Account</text>
+  <rect x="290" y="80" width="180" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label" x="380" y="113" text-anchor="middle">Create Account</text>
 
-  <!-- Fill Application -->
-  <rect x="290" y="216" width="180" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="380" y="249" text-anchor="middle">Fill Application</text>
+  <!-- Fill Application + identity checks -->
+  <rect x="270" y="176" width="220" height="72" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label" x="380" y="203" text-anchor="middle">Fill Application</text>
+  <text class="node-label-tiny" x="380" y="225" text-anchor="middle">eKYC + هوية الأحوال</text>
 
-  <!-- Route Selection (decision diamond) -->
-  <polygon points="380,310 470,375 380,440 290,375" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
-  <text class="node-label-i" x="380" y="370" text-anchor="middle">Route</text>
-  <text class="node-label-i" x="380" y="388" text-anchor="middle">Selection</text>
+  <!-- Route Selection -->
+  <polygon points="380,288 490,358 380,428 270,358" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
+  <text class="node-label-i" x="380" y="353" text-anchor="middle">Route</text>
+  <text class="node-label-i" x="380" y="371" text-anchor="middle">Selection</text>
 
-  <!-- Submit -->
-  <rect x="290" y="480" width="180" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="380" y="513" text-anchor="middle">Submit</text>
+  <!-- Payment (mandatory) -->
+  <rect x="290" y="468" width="180" height="64" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
+  <text class="node-label-i" x="380" y="494" text-anchor="middle">Payment</text>
+  <text class="node-label-tiny" x="380" y="514" text-anchor="middle">mandatory · application fee</text>
 
-  <!-- Review Decision (decision diamond) -->
-  <polygon points="380,576 470,641 380,706 290,641" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
-  <text class="node-label-i" x="380" y="636" text-anchor="middle">Review</text>
-  <text class="node-label-i" x="380" y="654" text-anchor="middle">Decision</text>
+  <!-- Submit (locks edits) -->
+  <rect x="270" y="572" width="220" height="72" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label" x="380" y="599" text-anchor="middle">Submit</text>
+  <text class="lock-label" x="380" y="621" text-anchor="middle">— edits locked —</text>
 
-  <!-- Approve (down) -->
-  <rect x="290" y="746" width="180" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="380" y="779" text-anchor="middle">Approve</text>
+  <!-- Review Decision -->
+  <polygon points="380,684 490,754 380,824 270,754" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
+  <text class="node-label-i" x="380" y="749" text-anchor="middle">Review</text>
+  <text class="node-label-i" x="380" y="767" text-anchor="middle">Decision</text>
 
-  <!-- Fix Data (left branch) -->
-  <rect x="60" y="613" width="140" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="130" y="646" text-anchor="middle">Fix Data</text>
+  <!-- Approve -->
+  <rect x="290" y="864" width="180" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label" x="380" y="897" text-anchor="middle">Approve</text>
 
-  <!-- Reject + Reason (right branch) -->
-  <rect x="560" y="613" width="160" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="640" y="640" text-anchor="middle">Rejection</text>
-  <text class="node-label" x="640" y="658" text-anchor="middle">+ Reason</text>
+  <!-- Fix Data (left) -->
+  <rect x="60" y="726" width="140" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label" x="130" y="759" text-anchor="middle">Fix Data</text>
 
   <!-- ============= EDGES ============= -->
+  <line x1="380" y1="58" x2="380" y2="78" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
+  <line x1="380" y1="136" x2="380" y2="174" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
+  <line x1="380" y1="248" x2="380" y2="286" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
 
-  <!-- Start -> Create Account -->
-  <line x1="380" y1="68" x2="380" y2="108" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
+  <!-- Route Selection -> Payment (accent) -->
+  <line x1="380" y1="428" x2="380" y2="466" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent)"/>
+  <text class="edge-label-accent" x="392" y="453">pay</text>
 
-  <!-- Create Account -> Fill Application -->
-  <line x1="380" y1="166" x2="380" y2="214" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
-
-  <!-- Fill Application -> Route Selection -->
-  <line x1="380" y1="272" x2="380" y2="308" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
-
-  <!-- Route Selection -> Submit -->
-  <line x1="380" y1="440" x2="380" y2="478" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
+  <!-- Payment -> Submit -->
+  <line x1="380" y1="532" x2="380" y2="570" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
 
   <!-- Submit -> Review Decision -->
-  <line x1="380" y1="536" x2="380" y2="574" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
+  <line x1="380" y1="644" x2="380" y2="682" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
 
-  <!-- Review Decision -> Approve (down, accent) -->
-  <line x1="380" y1="706" x2="380" y2="744" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent)"/>
-  <text class="edge-label-accent" x="392" y="730">approve</text>
+  <!-- Decision -> Approve (down, accent) -->
+  <line x1="380" y1="824" x2="380" y2="862" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent)"/>
+  <text class="edge-label-accent" x="392" y="850">approve</text>
 
-  <!-- Review Decision -> Fix Data (left) -->
-  <line x1="290" y1="641" x2="202" y2="641" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
-  <text class="edge-label" x="246" y="632" text-anchor="middle">edit request</text>
+  <!-- Decision -> Fix Data (left) -->
+  <line x1="270" y1="754" x2="202" y2="754" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
+  <text class="edge-label" x="236" y="745" text-anchor="middle">edit request</text>
 
-  <!-- Review Decision -> Reject (right) -->
-  <line x1="470" y1="641" x2="558" y2="641" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink)"/>
-  <text class="edge-label" x="514" y="632" text-anchor="middle">reject</text>
-
-  <!-- Fix Data -> back to Fill Application (loop up & right) -->
-  <path d="M 130 613 L 130 244 L 288 244" fill="none" stroke="#8a8a85" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-faint)"/>
-  <text class="edge-label" x="140" y="430">retry</text>
-
-  <!-- Reject -> Fresh Submission loop back to Fill Application (right side) -->
-  <path d="M 640 613 L 640 244 L 472 244" fill="none" stroke="#8a8a85" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-faint)"/>
-  <text class="edge-label" x="612" y="430" text-anchor="end">fresh submission</text>
+  <!-- Fix Data -> back to Fill Application (loop) -->
+  <path d="M 130 726 L 130 212 L 268 212" fill="none" stroke="#8a8a85" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-faint)"/>
+  <text class="edge-label" x="140" y="500">retry</text>
 
 </svg></div>
   </section>
@@ -445,12 +445,15 @@
     <div class="flow-text">
       <div class="reveal eyebrow">2.2 &middot; Figure 2</div>
       <h2 class="reveal">School Director <em>Flow</em></h2>
-      <p class="reveal lede">What the principal does when applications land in their queue. Three possible decisions branch from the central node. Every action &mdash; approve, edit-request, or reject &mdash; flows into a shared audit-log entry with timestamp and reason recorded.</p>
+      <p class="reveal lede">What the principal does when applications land in their queue. Two outcomes only &mdash; <em>approve</em> or <em>edit request</em>. The reject button has been removed; directors cannot turn an applicant away outright. Every action is logged with timestamp and reason. Approvals forward to the directorate; edit requests bounce back to the student.</p>
       <div class="reveal flow-summary">
-        <dl><div><dt>Open Item</dt><dd>What about the pledge or the parent approval?</dd></div></dl>
+        <dl>
+          <div><dt>Removed</dt><dd>The Reject button is gone &mdash; rejection is now a directorate-only action.</dd></div>
+          <div><dt>Open Item</dt><dd>How the parent pledge or guardian approval is captured at review time.</dd></div>
+        </dl>
       </div>
     </div>
-    <div class="reveal flow-image"><svg viewBox="0 0 760 880" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="directorTitle">
+    <div class="reveal flow-image"><svg viewBox="0 0 760 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="directorTitle">
   <title id="directorTitle">School Director Flow</title>
 
   <defs>
@@ -459,6 +462,9 @@
     </marker>
     <marker id="arrow-accent-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#c1410b"/>
+    </marker>
+    <marker id="arrow-faint-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8a85"/>
     </marker>
   </defs>
 
@@ -470,9 +476,10 @@
     .edge-label   { font-family: 'Inter Tight', sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; fill: #4a4a4a; }
     .edge-label-accent { font-family: 'Inter Tight', sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; fill: #c1410b; }
     .swimlane-label { font-family: 'Inter Tight', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; fill: #8a8a85; }
+    .annotation { font-family: 'Inter Tight', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; fill: #c1410b; font-style: italic; }
   </style>
 
-  <text class="swimlane-label" x="20" y="440" transform="rotate(-90 20 440)">School Director</text>
+  <text class="swimlane-label" x="20" y="400" transform="rotate(-90 20 400)">School Director</text>
 
   <!-- New Application -->
   <circle cx="380" cy="50" r="18" fill="none" stroke="#1a1a1a" stroke-width="1"/>
@@ -492,27 +499,26 @@
   <polygon points="380,310 480,380 380,450 280,380" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
   <text class="node-label-i" x="380" y="385" text-anchor="middle">Decision</text>
 
+  <!-- annotation: no reject -->
+  <text class="annotation" x="380" y="473" text-anchor="middle">no reject button</text>
+
   <!-- Approve (left) -->
   <rect x="80" y="352" width="140" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
   <text class="node-label" x="150" y="385" text-anchor="middle">Approve</text>
 
-  <!-- Reject (right) -->
-  <rect x="540" y="352" width="140" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="610" y="385" text-anchor="middle">Reject</text>
-
-  <!-- Edit Request (down center) -->
-  <rect x="310" y="500" width="140" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="380" y="533" text-anchor="middle">Edit Request</text>
+  <!-- Edit Request (right, replacing Reject position) -->
+  <rect x="540" y="352" width="160" height="56" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
+  <text class="node-label-i" x="620" y="385" text-anchor="middle">Edit Request</text>
 
   <!-- Audit Log Entry -->
-  <rect x="240" y="620" width="280" height="72" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="380" y="650" text-anchor="middle">Audit Log Entry</text>
-  <text class="node-label-tiny" x="380" y="670" text-anchor="middle">timestamp + reason</text>
+  <rect x="240" y="510" width="280" height="72" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label" x="380" y="540" text-anchor="middle">Audit Log Entry</text>
+  <text class="node-label-tiny" x="380" y="560" text-anchor="middle">timestamp + reason</text>
 
   <!-- Forward to Directorate -->
-  <rect x="280" y="746" width="200" height="56" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
-  <text class="node-label-i" x="380" y="772" text-anchor="middle">Forward to</text>
-  <text class="node-label-i" x="380" y="790" text-anchor="middle">Directorate</text>
+  <rect x="280" y="640" width="200" height="56" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
+  <text class="node-label-i" x="380" y="666" text-anchor="middle">Forward to</text>
+  <text class="node-label-i" x="380" y="684" text-anchor="middle">Directorate</text>
 
   <!-- ============= EDGES ============= -->
 
@@ -525,29 +531,27 @@
   <!-- review -> decision -->
   <line x1="380" y1="274" x2="380" y2="308" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-d)"/>
 
-  <!-- decision -> approve (left) -->
-  <line x1="280" y1="380" x2="222" y2="380" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-d)"/>
-  <text class="edge-label" x="251" y="370" text-anchor="middle">approve</text>
+  <!-- decision -> approve (left, accent) -->
+  <line x1="280" y1="380" x2="222" y2="380" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent-d)"/>
+  <text class="edge-label-accent" x="251" y="370" text-anchor="middle">approve</text>
 
-  <!-- decision -> reject (right) -->
+  <!-- decision -> edit request (right) -->
   <line x1="480" y1="380" x2="538" y2="380" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-d)"/>
-  <text class="edge-label" x="509" y="370" text-anchor="middle">reject</text>
-
-  <!-- decision -> edit request (down) -->
-  <line x1="380" y1="450" x2="380" y2="498" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent-d)"/>
-  <text class="edge-label-accent" x="390" y="478">edit request</text>
+  <text class="edge-label" x="509" y="370" text-anchor="middle">edit request</text>
 
   <!-- approve -> audit log (down then right) -->
-  <path d="M 150 408 L 150 656 L 238 656" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-d)"/>
+  <path d="M 150 408 L 150 546 L 238 546" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-d)"/>
 
-  <!-- reject -> audit log (down then left) -->
-  <path d="M 610 408 L 610 656 L 522 656" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-d)"/>
+  <!-- edit request -> audit log (down then left) -->
+  <path d="M 620 408 L 620 546 L 522 546" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-d)"/>
 
-  <!-- edit request -> audit log -->
-  <line x1="380" y1="556" x2="380" y2="618" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-d)"/>
+  <!-- audit log -> forward to directorate (only on approve) -->
+  <line x1="380" y1="582" x2="380" y2="638" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent-d)"/>
+  <text class="edge-label-accent" x="392" y="618">if approved</text>
 
-  <!-- audit log -> forward to directorate -->
-  <line x1="380" y1="692" x2="380" y2="744" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-d)"/>
+  <!-- audit log -> back to student (dashed loop, on edit) -->
+  <path d="M 240 546 L 60 546 L 60 200 L 268 200" fill="none" stroke="#8a8a85" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-faint-d)"/>
+  <text class="edge-label" x="70" y="192">if edit &middot; back to student</text>
 
 </svg></div>
   </section>
@@ -556,16 +560,18 @@
     <div class="flow-text">
       <div class="reveal eyebrow">2.3 &middot; Figure 3</div>
       <h2 class="reveal">Directorate <em>Flow</em></h2>
-      <p class="reveal lede">The directorate operates two parallel queues. Routine school-approved requests get a final verification pass. Stalled requests, where the school has gone silent, are handled directly. Both queues converge on a single decision node, then everything is logged and patterns are reported up to the ministry.</p>
+      <p class="reveal lede">The directorate operates two parallel queues, both visible to the directorate and the super admin. Routine school-approved requests pass eKYC and هوية الأحوال verification. When a school goes silent, days-elapsed triggers a notice to the school &mdash; the directorate does not take over the application. Two decision outcomes only &mdash; <em>approve</em>, or an <em>edit request</em> that bounces back to the school for fixes. No reject button anywhere in the pipeline.</p>
       <div class="reveal flow-summary">
         <dl>
-          <div><dt>Stall Trigger</dt><dd>We can check by days &mdash; give the school a notice, or take over.</dd></div>
-          <div><dt>Return Path</dt><dd>The directorate should be able to return an application to schools with a reason.</dd></div>
-          <div><dt>Martyrs&rsquo; Sons</dt><dd>If qualified, accepted as Route A. If not, the directorate manager can accept as Route B.</dd></div>
+          <div><dt>Visibility</dt><dd>Directorate and super admin see every school&rsquo;s applications &mdash; bottlenecks surface early.</dd></div>
+          <div><dt>Stall Trigger</dt><dd>Days elapsed triggers a notice to the school. The school remains the owner of the application.</dd></div>
+          <div><dt>Edit &rarr; School</dt><dd>An edit request from the directorate goes back to the school, not the student.</dd></div>
+          <div><dt>No Reject</dt><dd>Neither the school nor the directorate can reject &mdash; the only ways out are approve or edit.</dd></div>
+          <div><dt>Verification</dt><dd>eKYC and هوية الأحوال checked here, even on the routine pass.</dd></div>
         </dl>
       </div>
     </div>
-    <div class="reveal flow-image"><svg viewBox="0 0 900 760" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="directorateTitle">
+    <div class="reveal flow-image"><svg viewBox="0 0 900 860" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="directorateTitle">
   <title id="directorateTitle">Directorate Review &amp; Intervention Flow</title>
 
   <defs>
@@ -574,6 +580,9 @@
     </marker>
     <marker id="arrow-accent-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#c1410b"/>
+    </marker>
+    <marker id="arrow-faint-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8a85"/>
     </marker>
   </defs>
 
@@ -585,87 +594,96 @@
     .edge-label   { font-family: 'Inter Tight', sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; fill: #4a4a4a; }
     .edge-label-accent { font-family: 'Inter Tight', sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; fill: #c1410b; }
     .queue-label  { font-family: 'Inter Tight', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; fill: #8a8a85; }
+    .visibility-label { font-family: 'Inter Tight', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; fill: #c1410b; font-style: italic; }
   </style>
 
+  <!-- Visibility banner (top, full width) -->
+  <text class="visibility-label" x="450" y="22" text-anchor="middle">visible to directorate + super admin · bottlenecks surfaced</text>
+
   <!-- ============= QUEUE 1 (LEFT) ============= -->
-  <!-- Queue label -->
-  <text class="queue-label" x="60" y="50">Queue 1 &middot; Routine</text>
-  <line x1="60" y1="60" x2="380" y2="60" stroke="#e5e3dc" stroke-width="1"/>
+  <text class="queue-label" x="60" y="60">Queue 1 &middot; Routine</text>
+  <line x1="60" y1="70" x2="380" y2="70" stroke="#e5e3dc" stroke-width="1"/>
 
   <!-- School-Approved Application -->
-  <rect x="80" y="90" width="240" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="200" y="115" text-anchor="middle">School-Approved</text>
-  <text class="node-label-tiny" x="200" y="133" text-anchor="middle">application incoming</text>
+  <rect x="80" y="100" width="240" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label" x="200" y="125" text-anchor="middle">School-Approved</text>
+  <text class="node-label-tiny" x="200" y="143" text-anchor="middle">application incoming</text>
 
-  <!-- Final Verification Pass -->
-  <rect x="80" y="190" width="240" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="200" y="215" text-anchor="middle">Final Verification</text>
-  <text class="node-label-tiny" x="200" y="233" text-anchor="middle">routine pass</text>
+  <!-- Final Verification with eKYC + ID -->
+  <rect x="80" y="200" width="240" height="80" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label" x="200" y="225" text-anchor="middle">Final Verification</text>
+  <text class="node-label-tiny" x="200" y="245" text-anchor="middle">eKYC + هوية الأحوال</text>
+  <text class="node-label-tiny" x="200" y="263" text-anchor="middle">routine pass</text>
 
-  <!-- Edge: School-Approved -> Final Verification -->
-  <line x1="200" y1="146" x2="200" y2="188" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
+  <line x1="200" y1="156" x2="200" y2="198" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
 
   <!-- ============= QUEUE 2 (RIGHT) ============= -->
-  <text class="queue-label" x="520" y="50">Queue 2 &middot; Stalled</text>
-  <line x1="520" y1="60" x2="840" y2="60" stroke="#e5e3dc" stroke-width="1"/>
+  <text class="queue-label" x="520" y="60">Queue 2 &middot; Stalled</text>
+  <line x1="520" y1="70" x2="840" y2="70" stroke="#e5e3dc" stroke-width="1"/>
 
   <!-- Stalled / Silent School -->
-  <rect x="540" y="90" width="240" height="56" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
-  <text class="node-label" x="660" y="115" text-anchor="middle">Stalled / Silent School</text>
-  <text class="node-label-tiny" x="660" y="133" text-anchor="middle">checked by days elapsed</text>
+  <rect x="540" y="100" width="240" height="56" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
+  <text class="node-label" x="660" y="125" text-anchor="middle">Stalled / Silent School</text>
+  <text class="node-label-tiny" x="660" y="143" text-anchor="middle">checked by days elapsed</text>
 
-  <!-- Direct Handling -->
-  <rect x="540" y="190" width="240" height="56" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
-  <text class="node-label" x="660" y="215" text-anchor="middle">Direct Handling</text>
-  <text class="node-label-tiny" x="660" y="233" text-anchor="middle">notice or take over</text>
+  <!-- Notice to School -->
+  <rect x="540" y="200" width="240" height="64" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
+  <text class="node-label-i" x="660" y="225" text-anchor="middle">Notice to School</text>
+  <text class="node-label-tiny" x="660" y="245" text-anchor="middle">school still owns the application</text>
 
-  <!-- Edge: Stalled -> Direct Handling -->
-  <line x1="660" y1="146" x2="660" y2="188" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent-r)"/>
+  <line x1="660" y1="156" x2="660" y2="198" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent-r)"/>
+  <text class="edge-label-accent" x="672" y="183">notice</text>
 
   <!-- ============= CONVERGENCE: Decision ============= -->
-  <!-- Decision diamond center -->
-  <polygon points="430,330 540,400 430,470 320,400" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
-  <text class="node-label-i" x="430" y="405" text-anchor="middle">Decision</text>
+  <polygon points="430,380 540,450 430,520 320,450" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
+  <text class="node-label-i" x="430" y="455" text-anchor="middle">Decision</text>
 
-  <!-- Edges from Final Verification -> Decision -->
-  <path d="M 200 246 L 200 400 L 318 400" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
+  <!-- Edges: Final Verification -> Decision -->
+  <path d="M 200 280 L 200 450 L 318 450" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
 
-  <!-- Edges from Direct Handling -> Decision -->
-  <path d="M 660 246 L 660 400 L 542 400" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
+  <!-- Edges: Notice to School -> Decision (school still drives the application) -->
+  <path d="M 660 264 L 660 450 L 542 450" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
 
-  <!-- ============= APPROVE / REJECT ============= -->
-  <!-- Approve (left of decision, but lower so it has its own row) -->
-  <rect x="100" y="510" width="160" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="180" y="543" text-anchor="middle">Approve</text>
+  <!-- ============= APPROVE / EDIT (no reject) ============= -->
+  <!-- Approve (left) -->
+  <rect x="180" y="600" width="160" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label" x="260" y="633" text-anchor="middle">Approve</text>
 
-  <!-- Reject (right of decision) -->
-  <rect x="600" y="510" width="160" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="680" y="543" text-anchor="middle">Reject</text>
+  <!-- Edit Request → School (right) -->
+  <rect x="540" y="600" width="180" height="56" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
+  <text class="node-label-i" x="630" y="625" text-anchor="middle">Edit Request</text>
+  <text class="node-label-tiny" x="630" y="645" text-anchor="middle">back to school</text>
 
-  <!-- Edge: Decision -> Approve -->
-  <path d="M 380 432 L 180 432 L 180 508" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
-  <text class="edge-label" x="278" y="423" text-anchor="middle">approve</text>
+  <!-- Annotation: no reject -->
+  <text class="visibility-label" x="430" y="566" text-anchor="middle">no reject &middot; approve or edit only</text>
 
-  <!-- Edge: Decision -> Reject -->
-  <path d="M 480 432 L 680 432 L 680 508" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
-  <text class="edge-label" x="582" y="423" text-anchor="middle">reject</text>
+  <!-- Decision -> Approve (left, accent) -->
+  <path d="M 380 482 L 260 482 L 260 598" fill="none" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent-r)"/>
+  <text class="edge-label-accent" x="320" y="473" text-anchor="middle">approve</text>
+
+  <!-- Decision -> Edit Request (right) -->
+  <path d="M 480 482 L 630 482 L 630 598" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
+  <text class="edge-label" x="555" y="473" text-anchor="middle">edit request</text>
+
+  <!-- Edit Request -> back to school (dashed loop, up & right of school-approved box) -->
+  <path d="M 720 628 L 860 628 L 860 128 L 322 128" fill="none" stroke="#8a8a85" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-faint-r)"/>
+  <text class="edge-label" x="852" y="380" text-anchor="end">school re-edits</text>
 
   <!-- ============= LOG DECISION ============= -->
-  <rect x="340" y="610" width="180" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text class="node-label" x="430" y="643" text-anchor="middle">Log Decision</text>
+  <rect x="340" y="700" width="180" height="56" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text class="node-label" x="430" y="733" text-anchor="middle">Log Decision</text>
 
-  <!-- Edge: Approve -> Log Decision -->
-  <path d="M 180 566 L 180 638 L 338 638" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
+  <!-- Approve -> Log -->
+  <path d="M 260 656 L 260 728 L 338 728" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
 
-  <!-- Edge: Reject -> Log Decision -->
-  <path d="M 680 566 L 680 638 L 522 638" fill="none" stroke="#1a1a1a" stroke-width="1" marker-end="url(#arrow-ink-r)"/>
+  <!-- Edit Request -> Log (also recorded, dashed) -->
+  <path d="M 630 656 L 630 728 L 522 728" fill="none" stroke="#8a8a85" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-faint-r)"/>
 
   <!-- ============= REPORT TO MINISTRY ============= -->
-  <rect x="320" y="700" width="220" height="44" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
-  <text class="node-label-i" x="430" y="727" text-anchor="middle">Report to Ministry</text>
+  <rect x="320" y="790" width="220" height="44" fill="#fef3eb" stroke="#c1410b" stroke-width="1"/>
+  <text class="node-label-i" x="430" y="817" text-anchor="middle">Report to Ministry</text>
 
-  <!-- Edge: Log Decision -> Report -->
-  <line x1="430" y1="666" x2="430" y2="698" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent-r)"/>
+  <line x1="430" y1="756" x2="430" y2="788" stroke="#c1410b" stroke-width="1" marker-end="url(#arrow-accent-r)"/>
 
 </svg></div>
   </section>
@@ -673,47 +691,53 @@
   <section class="slide" data-title="School Doesn't Exist">
     <div class="reveal eyebrow">Edge Case</div>
     <h2 class="reveal">What if the school <em>doesn&rsquo;t exist?</em></h2>
-    <p class="reveal lede">A proposed sub-flow when a student names a school that isn&rsquo;t already registered.</p>
+    <p class="reveal lede">Two parallel ways a school enters the registry: the directorate adds it through their own portal, or the student requests it and the ministry plus the super admin co-approve.</p>
     <ol class="reveal steps">
-      <li class="step"><div class="step-text">The student enters the info.</div></li>
-      <li class="step"><div class="step-text">The directorate receives the request.</div></li>
-      <li class="step"><div class="step-text">They check if the school already exists or not.</div></li>
-      <li class="step branch"><div class="step-text">If it does, the directorate rejects the request with a reason.</div></li>
-      <li class="step branch"><div class="step-text">If not, they check if it is named correctly or not.</div></li>
-      <li class="step branch"><div class="step-text">If it is correct, then approved; else, edit request.</div></li>
+      <li class="step"><div class="step-text">The directorate has its own portal to add the schools they oversee &mdash; no student request needed.</div></li>
+      <li class="step"><div class="step-text">If a student names a school that isn&rsquo;t in the registry, they submit an &ldquo;add school&rdquo; request.</div></li>
+      <li class="step"><div class="step-text">The request reaches the ministry and the super admin in parallel for review.</div></li>
+      <li class="step"><div class="step-text">They check if the school already exists under a different name.</div></li>
+      <li class="step branch"><div class="step-text">If it does, the request is rejected with a reason.</div></li>
+      <li class="step branch"><div class="step-text">If not, they check whether it is named correctly.</div></li>
+      <li class="step branch"><div class="step-text">If correct, approve and add to the registry; otherwise, send an edit request to the student.</div></li>
     </ol>
   </section>
 
-  <section class="slide" data-title="Transfer & Multi-Account">
-    <div class="reveal eyebrow">Edge Cases</div>
-    <h2 class="reveal">Transfer <em>&amp;</em> shared accounts</h2>
-    <div class="reveal two-col">
-      <div>
-        <h3>What if the student wants to change schools?</h3>
-        <p>&mdash; The new school should accept.</p>
-        <p>&mdash; The old school should also accept.</p>
-      </div>
-      <div>
-        <h3>What about multiple students using the same account?</h3>
-        <p>Lock after submission? Can the student request an edit, or should the school check and report?</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="slide" data-title="Open Questions">
+  <!-- Open Questions slide hidden for now — restore by changing class back to "slide" -->
+  <section class="slide-hidden" data-title="Open Questions" hidden>
     <div class="reveal eyebrow">For Decision</div>
     <h2 class="reveal">Open <em>questions</em></h2>
     <p class="reveal lede">Tap a card to expand. These are the items raised on the working document that we need stakeholder input on.</p>
     <div class="reveal question-grid" id="qgrid">
       <div class="q-card">
+        <div class="q-card-tag"><span>Payment</span><span class="toggle">+</span></div>
+        <h4>When does a refund trigger, and on what timeline?</h4>
+        <div class="q-card-detail"><p>Rejection is no longer in the flow &mdash; so refunds need a different trigger. Withdrawal before approval? Failed eKYC/هوية? Abandoned application after N days? And who covers gateway fees?</p></div>
+      </div>
+      <div class="q-card">
+        <div class="q-card-tag"><span>Identity</span><span class="toggle">+</span></div>
+        <h4>What happens if eKYC or هوية الأحوال fails?</h4>
+        <div class="q-card-detail"><p>Hard block at Fill Application, or proceed with manual verification by the directorate? And does a failed check refund the payment automatically?</p></div>
+      </div>
+      <div class="q-card">
+        <div class="q-card-tag"><span>Account</span><span class="toggle">+</span></div>
+        <h4>How hidden should &ldquo;delete account&rdquo; be?</h4>
+        <div class="q-card-detail"><p>Currently too prominent &mdash; should it require confirmation, sit under a settings sub-menu, or be gated behind directorate request? Any record retention rules to honour first?</p></div>
+      </div>
+      <div class="q-card">
+        <div class="q-card-tag"><span>Schools</span><span class="toggle">+</span></div>
+        <h4>Should &ldquo;add school&rdquo; requests notify the local directorate?</h4>
+        <div class="q-card-detail"><p>Today the request goes to ministry + super admin. Should the directorate that owns the geographic area also see it &mdash; especially since they have their own portal to add schools?</p></div>
+      </div>
+      <div class="q-card">
         <div class="q-card-tag"><span>Governance</span><span class="toggle">+</span></div>
-        <h4>Who manages schools? Directorate?</h4>
-        <div class="q-card-detail"><p>Tied to school registry &mdash; if the directorate verifies, who maintains it?</p></div>
+        <h4>Who maintains the school registry over time?</h4>
+        <div class="q-card-detail"><p>Directorate adds via portal, ministry/super-admin approves student requests &mdash; but who is accountable for renames, mergers, and closures?</p></div>
       </div>
       <div class="q-card">
         <div class="q-card-tag"><span>Compliance</span><span class="toggle">+</span></div>
         <h4>Is there any regulation we need to follow?</h4>
-        <div class="q-card-detail"><p>Need to identify the legal mandate</p></div>
+        <div class="q-card-detail"><p>Need to identify the legal mandate &mdash; especially around payment handling, identity data retention, and minor protection.</p></div>
       </div>
       <div class="q-card">
         <div class="q-card-tag"><span>Identity</span><span class="toggle">+</span></div>
@@ -728,12 +752,17 @@
       <div class="q-card">
         <div class="q-card-tag"><span>Lifecycle</span><span class="toggle">+</span></div>
         <h4>Can a student withdraw before approval?</h4>
-        <div class="q-card-detail"><p>If yes &mdash; before submit only, or also after director review?</p></div>
+        <div class="q-card-detail"><p>If yes &mdash; before submit only, or also after director review? And how does that interact with the application-fee refund?</p></div>
       </div>
       <div class="q-card">
         <div class="q-card-tag"><span>Lifecycle</span><span class="toggle">+</span></div>
         <h4>Data correction after approval?</h4>
         <div class="q-card-detail"><p>Misspelled name on an already-approved record &mdash; who is allowed to fix it, and is the change audit-logged?</p></div>
+      </div>
+      <div class="q-card">
+        <div class="q-card-tag"><span>Account</span><span class="toggle">+</span></div>
+        <h4>Multiple students sharing one account?</h4>
+        <div class="q-card-detail"><p>Should the parent account hold many student profiles? If yes, how is the application lock scoped &mdash; per student, or whole account?</p></div>
       </div>
     </div>
   </section>
@@ -741,13 +770,13 @@
   <section class="slide closing-slide" data-title="Next Steps">
     <div class="reveal eyebrow">Where we go from here</div>
     <h2 class="reveal">Thank <em>you</em>.</h2>
-    <p class="reveal lede">We&rsquo;ll close out the open questions on slide 7 with stakeholder input, then lock the flows for build. Use the buttons below to jump back into the deck.</p>
+    <p class="reveal lede">We&rsquo;ll lock the flows for build once stakeholder feedback lands. Use the buttons below to jump back into the deck.</p>
     <div class="reveal closing-actions">
       <button class="pill-btn primary" data-jump="0">Restart</button>
-      <button class="pill-btn" data-jump="7">Open Questions</button>
       <button class="pill-btn" data-jump="2">Student Flow</button>
       <button class="pill-btn" data-jump="3">Director Flow</button>
       <button class="pill-btn" data-jump="4">Directorate Flow</button>
+      <button class="pill-btn" data-jump="5">School Doesn&rsquo;t Exist</button>
     </div>
   </section>
 
